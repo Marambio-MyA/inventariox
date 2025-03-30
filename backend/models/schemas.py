@@ -1,6 +1,5 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import Optional
-from datetime import datetime
 
 class ProductoBase(BaseModel):
     nombre: str
@@ -21,8 +20,25 @@ class ProductoUpdate(BaseModel):
 
 class Producto(ProductoBase):
     id: int
-    created_at: datetime
-    updated_at: Optional[datetime] = None
 
     class Config:
-        from_attributes = True  # Nuevo nombre para orm_mode en Pydantic v2
+        from_attributes = True
+
+class UsuarioCreate(BaseModel):
+    nombre: str
+    nombre_usuario: str
+    email: EmailStr
+    contraseña: str
+
+class Usuario(UsuarioCreate):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    nombre_usuario: Optional[str] = None
