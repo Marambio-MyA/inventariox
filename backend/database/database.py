@@ -17,8 +17,8 @@ DB_NAME = os.getenv('POSTGRES_DB')
 
 def crear_base_datos():
     """Crea la base de datos si no existe usando SQLAlchemy"""
-    # Crear engine para conectarse a postgres por defecto
-    engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}/postgres")
+    # Crear engine con autocommit=True para evitar el error de transacción activa
+    engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}/postgres", isolation_level="AUTOCOMMIT")
     
     with engine.connect() as conn:
         # Verificar si la base de datos existe
