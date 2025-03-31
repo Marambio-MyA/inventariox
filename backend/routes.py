@@ -1,5 +1,9 @@
+import os
+import sentry_sdk
+from sentry_sdk.integrations.fastapi import FastApiIntegration
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from datetime import timedelta
@@ -17,6 +21,17 @@ from models.schemas import (
     UsuarioCreate,
     Usuario,
     Token
+)
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Configuración de Sentry
+sentry_sdk.init(
+    dsn=os.getenv("SENTRY_DSN"),
+    integrations=[FastApiIntegration()],
+    traces_sample_rate=1.0,
+    profiles_sample_rate=1.0,
 )
 
 # Crear todas las tablas
