@@ -1,0 +1,33 @@
+{% extends 'app/base.html' %}
+
+{% block title %}Lista de Productos{% endblock %}
+
+{% block content %}
+<h1>Lista de Productos</h1>
+
+<!-- Botón para agregar un nuevo producto -->
+<a href="{% url 'crear_producto' %}" class="btn btn-primary mb-3">Agregar Producto</a>
+
+<table id="productos-table" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.precio }}</td>
+            <td>
+                <a href="{% url 'detalle_producto' producto.id %}" class="btn btn-info">Ver</a>
+                <a href="{% url 'actualizar_producto' producto.id %}" class="btn btn-warning">Actualizar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

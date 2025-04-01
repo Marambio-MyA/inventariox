@@ -1,0 +1,40 @@
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-brand">
+            <a href="{% url 'home' %}">Mi Aplicación</a>
+        </div>
+        <div class="navbar-links">
+            <a href="{% url 'home' %}">Dashboard</a>
+            <a href="{% url 'listar_productos' %}">Productos</a>
+            <a href="{% url 'entradas_salidas' %}">Entradas/Salidas</a>
+            <a href="{% url 'login' %}">Cerrar sesión</a>
+        </div>
+    </div>
+</nav>
+
+<style>
+    .navbar {
+        background-color: #34495e;
+        padding: 15px;
+        color: #ecf0f1;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .navbar-brand a {
+        color: #ecf0f1;
+        font-size: 1.5em;
+        text-decoration: none;
+    }
+    .navbar-links a {
+        color: #ecf0f1;
+        text-decoration: none;
+        margin-left: 20px;
+    }
+    .navbar-links a:hover {
+        color: #bdc3c7;
+    }
+</style>
