@@ -1,0 +1,36 @@
+{% extends "app/base.html" %}
+
+{% block title %}Entradas y Salidas de Inventario{% endblock %}
+
+{% block content %}
+<h2 class="mt-4">🔄 Entradas/Salidas de Inventario</h2>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Stock Final</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for movimiento in movimientos %}
+        <tr>
+            <td>{{ movimiento.fecha }}</td>
+            <td>{{ movimiento.producto.nombre }}</td>
+            <td>
+                {% if movimiento.tipo == 'entrada' %}
+                    <span class="badge bg-success">Entrada</span>
+                {% else %}
+                    <span class="badge bg-danger">Salida</span>
+                {% endif %}
+            </td>
+            <td>{{ movimiento.cantidad }}</td>
+            <td>{{ movimiento.stock_final }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

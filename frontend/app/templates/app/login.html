@@ -14,7 +14,13 @@
 </head>
 <body>
     <h2>Iniciar Sesión</h2>
-    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li class="error">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         <input type="text" name="username" placeholder="Usuario" required>
