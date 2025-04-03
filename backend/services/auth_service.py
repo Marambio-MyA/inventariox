@@ -5,11 +5,15 @@ from typing import Optional
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from fastapi import HTTPException, status
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Configuración de seguridad
-SECRET_KEY = "tu_clave_secreta_aqui"  # En producción, usar variable de entorno
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+SECRET_KEY = os.getenv('SECRET_KEY')
+ALGORITHM = os.getenv('HS256')
+ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv('ACCES_TOKEN_EXPIRE_MINUTES')
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

@@ -4,9 +4,13 @@ from fastapi.templating import Jinja2Templates
 from routes.api_router import router as api_router
 from routes.views_router import router as views_router
 from starlette.middleware.sessions import SessionMiddleware
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = FastAPI()
-app.add_middleware(SessionMiddleware, secret_key="TU_CLAVE_SECRETA")
+app.add_middleware(SessionMiddleware, secret_key=os.getenv('SECRET_KEY_MIDDLEWARE'))
 
 # Incluir enrutadores
 app.include_router(api_router, prefix="/api")
