@@ -17,28 +17,12 @@ class ProductoUpdate(BaseModel):
     cantidad_disponible: Optional[int] = Field(None, ge=0)
     precio_unitario: Optional[float] = Field(None, ge=0)
     categoria: Optional[str] = None
+    
+class ProductoUpdateCantidad(BaseModel):
+    cantidad_disponible: Optional[int] = Field(None, ge=0)
 
 class Producto(ProductoBase):
     id: int
 
     class Config:
         from_attributes = True
-
-class UsuarioCreate(BaseModel):
-    nombre: str
-    nombre_usuario: str
-    email: EmailStr
-    contraseña: str
-
-class Usuario(UsuarioCreate):
-    id: int
-
-    class Config:
-        from_attributes = True
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-class TokenData(BaseModel):
-    nombre_usuario: Optional[str] = None

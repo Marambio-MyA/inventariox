@@ -1,6 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, CheckConstraint
-from sqlalchemy.sql import func
-from database.database import Base
+from sqlalchemy import Column, Integer, String, Float, CheckConstraint
+from database.database import Base,engine
 
 class Producto(Base):
     __tablename__ = "productos"
@@ -16,3 +15,5 @@ class Producto(Base):
         CheckConstraint('cantidad_disponible >= 0', name='check_cantidad_positiva'),
         CheckConstraint('precio_unitario >= 0', name='check_precio_positivo'),
     ) 
+    
+Producto.metadata.create_all(bind=engine)
