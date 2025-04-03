@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from database.database import get_db
 from services.product_service import ProductoService
-from schemas.producto_schemas import (
+from schemas.api.producto_schemas import (
     ProductoCreate,
     ProductoUpdate,
     ProductoUpdateCantidad,

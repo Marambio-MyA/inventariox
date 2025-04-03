@@ -1,14 +1,21 @@
 from fastapi import FastAPI
-from routes.user_routes import router as user_router
-from routes.product_routes import router as product_router
-from routes.auth_routes import router as auth_router
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from routes.api_router import router as api_router
+from routes.views_router import router as views_router
+from starlette.middleware.sessions import SessionMiddleware  # ✅ CORRECTO
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 app = FastAPI()
 
+# Clave secreta para las sesiones (debe ser segura y única)
+app.add_middleware(SessionMiddleware, secret_key="TU_CLAVE_SECRETA")
 
 # Incluir enrutadores
-app.include_router(user_router, prefix="/users", tags=["Usuarios"])
-app.include_router(product_router, prefix="/productos", tags=["Productos"])
-app.include_router(auth_router, prefix="/auth", tags=["Auth"])
+app.include_router(api_router, prefix="/api")  # Todas las rutas de la API estarán en /api
+app.include_router(views_router)  # Las vistas no tienen prefijo
+
+# Archivos estáticos
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Configuración de Jinja2
+templates = Jinja2Templates(directory="templates")
