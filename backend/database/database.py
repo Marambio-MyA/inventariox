@@ -6,7 +6,6 @@ import os
 
 load_dotenv()
 
-# Definir Base antes de usarlo
 Base = declarative_base()
 
 # Obtener credenciales sin el nombre de la base de datos
@@ -17,7 +16,6 @@ DB_NAME = os.getenv('POSTGRES_DB')
 
 def crear_base_datos():
     """Crea la base de datos si no existe usando SQLAlchemy"""
-    # Crear engine con autocommit=True para evitar el error de transacción activa 
     engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}/postgres", isolation_level="AUTOCOMMIT")
     
     with engine.connect() as conn:
@@ -34,10 +32,8 @@ def crear_base_datos():
 
 def crear_tablas():
     """Crea las tablas si no existen"""
-    # Crear engine con la base de datos específica
     engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}/{DB_NAME}")
     
-    # Crear todas las tablas
     Base.metadata.create_all(bind=engine)
     print("Tablas creadas/verificadas exitosamente")
 
