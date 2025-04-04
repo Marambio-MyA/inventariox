@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from typing import List, Optional
@@ -10,6 +10,10 @@ from schemas.api.producto_schemas import (
     ProductoUpdateCantidad,
     Producto
 )
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+import io
+
 
 router = APIRouter()
 
@@ -80,3 +84,33 @@ def actualizar_stock(
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return producto
 
+@router.get("/reporte/pdf")
+def generar_reporte_pdf(db: Session = Depends(get_db)):
+    productos = db.query(Producto).all()
+    
+    total_productos = len(productos)
+    valor_total = sum(prod.precio * prod.cantidad for prod in productos)
+    productos_agotados = [prod.nombre for prod in productos if prod.cantidad == 0]
+
+    # Crear PDF en memoria
+    buffer = io.BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=letter)
+    pdf.setTitle("Reporte de Inventario")
+
+    pdf.drawString(100, 750, "Reporte de Inventario")
+    pdf.drawString(100, 730, f"Total de productos: {total_productos}")
+    pdf.drawString(100, 710, f"Valor total del inventario: ${valor_total:.2f}")
+    
+    pdf.drawString(100, 690, "Productos agotados:")
+    y = 670
+    for producto in productos_agotados:
+        pdf.drawString(120, y, f"- {producto}")
+        y -= 20
+    
+    pdf.save()
+    buffer.seek(0)
+
+    # Devolver el PDF como respuesta
+    return Response(content=buffer.getvalue(), media_type="application/pdf", headers={
+        "Content-Disposition": "attachment; filename=Reporte.pdf"
+    })
