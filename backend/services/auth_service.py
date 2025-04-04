@@ -5,15 +5,7 @@ from typing import Optional
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from fastapi import HTTPException, status
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-# Configuración de seguridad
-SECRET_KEY = os.getenv('SECRET_KEY')
-ALGORITHM = os.getenv('HS256')
-ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv('ACCES_TOKEN_EXPIRE_MINUTES')
+import config
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -60,15 +52,15 @@ class AuthService:
     @staticmethod
     def crear_token_acceso(data: dict) -> str:
         to_encode = data.copy()
-        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        expire = datetime.utcnow() + timedelta(minutes=config.ACCESS_TOKEN_EXPIRE_MINUTES)
         to_encode.update({"exp": expire})
-        encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+        encoded_jwt = jwt.encode(to_encode, config.SECRET_KEY, algorithm=config.ALGORITHM)
         return encoded_jwt
 
     @staticmethod
     def verificar_token(token: str) -> dict:
         try:
-            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            payload = jwt.decode(token, config.SECRET_KEY, algorithms=[config.ALGORITHM])
             return payload
         except JWTError:
             raise HTTPException(

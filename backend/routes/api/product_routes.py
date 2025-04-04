@@ -14,7 +14,7 @@ from schemas.api.producto_schemas import (
 router = APIRouter()
 
 # Configuración de OAuth2
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/token")
 
 # Rutas de productos (protegidas)
 @router.get("/", response_model=List[Producto])

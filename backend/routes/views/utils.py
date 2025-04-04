@@ -1,11 +1,18 @@
 import httpx
 from fastapi import HTTPException
-from dotenv import load_dotenv
-import os
+import config
+from fastapi import Request
+from jose import jwt, JWTError
 
-load_dotenv()
-
-API_BACKEND = os.getenv('API_BACKEND')
+def get_current_user(request: Request):
+    token = request.session.get("access_token")
+    if not token:
+        return None
+    try:
+        payload = jwt.decode(token, config.SECRET_KEY, algorithms=[config.ALGORITHM])
+        return payload.get("sub")
+    except JWTError:
+        return None
 
 async def from_api(ruta: str , metodo: str = "GET", data: dict = None, headers: dict = None):
     """
@@ -23,7 +30,7 @@ async def from_api(ruta: str , metodo: str = "GET", data: dict = None, headers: 
     Raises:
     - HTTPException: Si la solicitud no fue exitosa, se lanza una excepción con el código de error.
     """
-    url_completa = f"{API_BACKEND}{ruta}"
+    url_completa = f"{config.API_BACKEND}{ruta}"
 
     async with httpx.AsyncClient() as client:
         try:

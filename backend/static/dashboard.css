@@ -1,0 +1,103 @@
+
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif; /* Asegurándonos de que la fuente sea clara */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos del navbar */
+.navbar-custom {
+    background-color: #007bff; /* Color del navbar */
+    padding: 15px 20px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.navbar-custom span {
+    margin-left: 15px;
+}
+
+/* Estilos de la sidebar */
+.sidebar {
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.sidebar .menu-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.sidebar a:hover {
+    background-color: #007bff; /* Hover color */
+    transition: background-color 0.3s;
+}
+
+.content {
+    margin-left: 260px; /* Espacio para que la sidebar no se superponga */
+    padding: 20px;
+    height: 100vh;
+}
+
+/* Botones */
+.btn-outline-danger {
+    border: 1px solid #dc3545;
+    color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Mejorar la visibilidad de los textos */
+h4, .navbar-custom, .sidebar a {
+    font-weight: 500;
+}
+
+/* Ajustes de texto */
+.sidebar a, .navbar-custom span {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.btn-outline-danger {
+    padding-left: 20px; /* Aumentamos el padding a la izquierda */
+    padding-right: 20px; /* Aseguramos un padding equilibrado a la derecha */
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    font-weight: 500;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Ajustar el espaciado del texto del usuario */
+.navbar-custom span {
+    margin-left: 20px; /* Asegura que el texto de usuario no esté tan pegado */
+}
